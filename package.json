@@ -13,6 +13,7 @@
     "vite-plugin-glsl": "^1.3.0"
   },
   "dependencies": {
+    "gsap": "^3.12.5",
     "three": "^0.165.0"
   }
 }

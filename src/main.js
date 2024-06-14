@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import gsap from 'gsap'
 import cursorVertexShader from './shaders/plane_cursor/vertex.glsl'
 import cursorFragmentShader from './shaders/plane_cursor/fragment.glsl'
 
@@ -42,11 +43,20 @@ window.addEventListener('resize', () => {
 
 const mouse = new THREE.Vector2()
 window.addEventListener('mousemove', (e) => {
-	mouse.x = e.clientX / sizes.width
-	mouse.y = 1 - e.clientY / sizes.height
+	gsap.to(mouse, {
+		duration: 1,
+		x: e.clientX / sizes.width,
+		y: 1 - e.clientY / sizes.height,
+		ease: 'back.out(3)',
+		onUpdate: () => {
+			material.uniforms.uMouse.value.set(mouse.x, mouse.y)
+		},
+	})
+	// mouse.x = e.clientX / sizes.width
+	// mouse.y = 1 - e.clientY / sizes.height
 
-	material.uniforms.uMouse.value.x = mouse.x
-	material.uniforms.uMouse.value.y = mouse.y
+	// material.uniforms.uMouse.value.x = mouse.x
+	// material.uniforms.uMouse.value.y = mouse.y
 })
 
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
