@@ -47,7 +47,7 @@ window.addEventListener('mousemove', (e) => {
 		duration: 1,
 		x: e.clientX / sizes.width,
 		y: 1 - e.clientY / sizes.height,
-		ease: 'back.out(3)',
+		ease: 'power2.out',
 		onUpdate: () => {
 			material.uniforms.uMouse.value.set(mouse.x, mouse.y)
 		},

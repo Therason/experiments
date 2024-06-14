@@ -42,7 +42,7 @@ void main() {
   float mouseDistance = distance(uMouse * vec2(uAspect, 1.0), uv);
   float noise = snoise(((uv * 0.2) + uTime * 0.01) * 10.) * 0.05;
   mouseDistance += noise;
-  float strength = step(0.9, 1.0 - mouseDistance);
+  float strength = step(0.85, 1.0 - mouseDistance);
 
   gl_FragColor = vec4(strength, 0.0, 0.0, 1.0);
 }
