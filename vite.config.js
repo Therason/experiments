@@ -3,6 +3,6 @@ import glsl from 'vite-plugin-glsl'
 export default {
 	root: 'src/',
 	publicDir: '../public/',
-	base: './',
+	base: '/experiments',
 	plugins: [glsl()],
 }
