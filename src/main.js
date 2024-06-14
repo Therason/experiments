@@ -1,11 +1,16 @@
 import * as THREE from 'three'
+import cursorVertexShader from './shaders/plane_cursor/vertex.glsl'
+import cursorFragmentShader from './shaders/plane_cursor/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 
 const scene = new THREE.Scene()
 
 const geometry = new THREE.PlaneGeometry(2, 2)
-const material = new THREE.MeshBasicMaterial({ color: 'blue' })
+const material = new THREE.ShaderMaterial({
+	vertexShader: cursorVertexShader,
+	fragmentShader: cursorFragmentShader,
+})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
