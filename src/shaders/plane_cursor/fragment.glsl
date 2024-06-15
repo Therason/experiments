@@ -36,14 +36,23 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 
+float smin(float a, float b, float k) {
+    float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+    return mix(b, a, h) - k * h * (1.0 - h);
+}
+
 void main() {
   vec2 uv = vUv;
   uv.x *= uAspect;
-  // uv.y += sin(uTime * 0.1) / 5.;
+  vec2 secondBall = vec2(0.75, 0.75);
+  float secondDistance = distance(secondBall * vec2(uAspect, 1.0), uv);
+  secondDistance += snoise(2.0 * (uv + uTime * 0.07)) * 0.05;
+
   float mouseDistance = distance(uMouse * vec2(uAspect, 1.0), uv);
-  float noise = snoise(((uv * 0.2) + uTime * 0.01) * 10.) * 0.05;
+  float noise = snoise(((uv * 0.05) + uTime * 0.005) * 30.) * 0.09;
   mouseDistance += noise;
-  float strength = step(0.8, 1.0 - mouseDistance);
+  mouseDistance = smin(mouseDistance, secondDistance + 0.15, 0.1);
+  float strength = step(0.75, 1.0 - mouseDistance);
 
   gl_FragColor = vec4(uColor, strength);
 }
