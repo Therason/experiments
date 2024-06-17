@@ -15,7 +15,7 @@ const material = new THREE.ShaderMaterial({
 		uMouse: new THREE.Uniform(new THREE.Vector2(0, 0)),
 		uAspect: new THREE.Uniform(window.innerWidth / window.innerHeight),
 		uTime: new THREE.Uniform(0),
-		uColor: new THREE.Uniform(new THREE.Color('#dbd1bd').convertLinearToSRGB()),
+		uColor: new THREE.Uniform(new THREE.Color('#B13F0E').convertLinearToSRGB()),
 	},
 	transparent: true,
 	depthWrite: false,
