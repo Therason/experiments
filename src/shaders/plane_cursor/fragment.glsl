@@ -39,7 +39,7 @@ float smin(float a, float b, float k) {
     return mix(b, a, h) - k * h * (1.0 - h);
 }
 
-// gloop signed distance function
+// gloop distance function
 float gloopDistance(vec2 pos, vec2 uv, float uvFactor, float timeFactor, float sizeFactor, float noiseFactor) {
   float uvDistance = distance(pos, uv);
   uvDistance += snoise(((uv * uvFactor) + (uTime * timeFactor)) * sizeFactor) * noiseFactor;
@@ -50,8 +50,10 @@ void main() {
   vec2 uv = vUv;
   uv.x *= uAspect;
 
+  // mouse position
   float mouseDistance = gloopDistance(uMouse * vec2(uAspect, 1.0), uv, 0.05, 0.005, 30.0, 0.09);
 
+  // interactive balls in scene
   vec2 ballA = vec2(0.75, 0.75);
   ballA *= vec2(uAspect, 1.0);
   float ballADistance = gloopDistance(ballA, uv + vec2(sin(uTime * 0.5) * 0.1, cos(uTime * 0.2) * 0.1), 1.0, 0.07, 2.0, 0.05);
@@ -67,14 +69,14 @@ void main() {
 
   vec2 ballD = vec2(0.8, 0.02);
   ballD *= vec2(uAspect, 1.0);
-  float ballDDistance = gloopDistance(ballD - vec2(cos(uTime) * 0.03, sin(uTime) * 0.2), uv, 1.0, 0.05, 1.7, 0.06);
+  float ballDDistance = gloopDistance(ballD - vec2(cos(uTime) * 0.03, sin(uTime) * 0.07), uv, 1.0, 0.05, 1.7, 0.06);
 
   // smoothing
   mouseDistance = smin(mouseDistance, ballADistance + 0.08, 0.1);
   mouseDistance = smin(mouseDistance, ballBDistance + 0.2, 0.1);
   mouseDistance = smin(mouseDistance, ballCDistance + 0.15, 0.1);
   mouseDistance = smin(mouseDistance, ballDDistance + 0.12, 0.1);
-  float strength = step(0.75, 1.0 - mouseDistance);
 
+  float strength = step(0.75, 1.0 - mouseDistance);
   gl_FragColor = vec4(uColor, strength);
 }

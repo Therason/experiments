@@ -1,5 +1,3 @@
-# Experiment
+# Experiments
 
----
-
-Various stuff where I play around and try to learn something
+Various experiments where I play around and try to learn something.

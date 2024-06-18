@@ -34,16 +34,16 @@ window.addEventListener('resize', () => {
 	sizes.height = window.innerHeight
 
 	// Update camera
-	// camera.aspect = sizes.width / sizes.height
 	camera.updateProjectionMatrix()
 
 	// Update renderer
 	renderer.setSize(sizes.width, sizes.height)
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
 
 	material.uniforms.uAspect.value = sizes.width / sizes.height
 })
 
+const githubIcon = document.querySelector('.lucide-github')
 const mouse = new THREE.Vector2()
 window.addEventListener('mousemove', (e) => {
 	gsap.to(mouse, {
@@ -55,6 +55,33 @@ window.addEventListener('mousemove', (e) => {
 			material.uniforms.uMouse.value.set(mouse.x, mouse.y)
 		},
 	})
+
+	// magnetic icon
+	const iconRect = githubIcon.getBoundingClientRect()
+	const iconCenterX = iconRect.left + iconRect.width / 2
+	const iconCenterY = iconRect.top + iconRect.height / 2
+
+	const dx = e.clientX - iconCenterX
+	const dy = e.clientY - iconCenterY
+	const distance = Math.sqrt(dx * dx + dy * dy)
+
+	if (distance < 100) {
+		const magnetEffectX = (dx * 0.1) / distance
+		const magnetEffectY = (dy * 0.1) / distance
+		gsap.to(githubIcon, {
+			x: magnetEffectX * (100 - distance),
+			y: magnetEffectY * (100 - distance),
+			ease: 'power3.out',
+			overwrite: true,
+		})
+	} else {
+		gsap.to(githubIcon, {
+			x: 0,
+			y: 0,
+			ease: 'power2.out',
+			overwrite: true,
+		})
+	}
 })
 
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
