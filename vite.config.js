@@ -5,4 +5,12 @@ export default {
 	publicDir: '../public/',
 	base: '/experiments',
 	plugins: [glsl()],
+	build: {
+		rollupOptions: {
+			input: ['index.html', 'about.html'],
+			output: {
+				entryFileNames: ['index.html', 'about.html'],
+			},
+		},
+	},
 }
