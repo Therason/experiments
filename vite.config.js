@@ -7,9 +7,9 @@ export default {
 	plugins: [glsl()],
 	build: {
 		rollupOptions: {
-			input: ['index.html', 'about.html'],
-			output: {
-				entryFileNames: ['index.html', 'about.html'],
+			input: {
+				main: './src/index.html',
+				portal: './src/portal/index.html',
 			},
 		},
 	},

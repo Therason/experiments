@@ -2,6 +2,7 @@ import GUI from 'lil-gui'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPixelatedPass } from 'three/examples/jsm/postprocessing/RenderPixelatedPass.js'
@@ -173,19 +174,25 @@ const portalLightMaterial = new THREE.ShaderMaterial({
 /**
  * Model
  */
-gltfLoader.load('portal.glb', (gltf) => {
-	// console.log(gltf.scene)
-	gltf.scene.traverse((child) => {
-		if (child.name === 'poleLightA' || child.name === 'poleLightB') {
-			child.material = poleLightMaterial
-		} else if (child.name === 'portalLight') {
-			child.material = portalLightMaterial
-		} else {
-			child.material = basicMaterial
-		}
-	})
-	scene.add(gltf.scene)
-})
+
+gltfLoader.load(
+	'portal.glb',
+	(gltf) => {
+		// console.log(gltf.scene)
+		gltf.scene.traverse((child) => {
+			if (child.name === 'poleLightA' || child.name === 'poleLightB') {
+				child.material = poleLightMaterial
+			} else if (child.name === 'portalLight') {
+				child.material = portalLightMaterial
+			} else {
+				child.material = basicMaterial
+			}
+		})
+		scene.add(gltf.scene)
+	},
+	() => {},
+	(e) => console.error(e)
+)
 
 /**
  * Fireflies
